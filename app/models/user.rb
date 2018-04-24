@@ -14,6 +14,8 @@ class User < ApplicationRecord
   validates :email, format:
     { with: /\A[a-z\d_+.\-]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i }
 
+  before_validation :normalize_username!
+
   attr_accessor :password
   validates_presence_of :password, on: :create
   validates_confirmation_of :password
@@ -35,6 +37,10 @@ class User < ApplicationRecord
                                  DIGEST.length,
                                  DIGEST)
     )
+  end
+
+  def normalize_username!
+    self.username = username.downcase unless username.nil?
   end
 
   def self.hash_to_string(password_hash)
