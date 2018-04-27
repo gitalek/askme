@@ -19,6 +19,12 @@
     @<%= @user.username %>
   </h2>
 
+  <h3>
+    <%= "#{@question_to_count} #{sklonenie(@question_to_count, 'вопрос', 'вопроса', 'вопросов')} #{sklonenie(@question_to_count, 'получен', 'получено', 'получено')}" %>
+    <br>
+    <%= "#{@question_from_count} #{sklonenie(@question_from_count, 'вопрос', 'вопроса', 'вопросов')} #{sklonenie(@question_from_count, 'задан', 'задано', 'задано')}" %>
+  </h3>
+
   <div class="user-ask-button container text-center">
     <%# Используем встроенный в rails хелпер link_to %>
     <%= link_to "Спроси меня", '', class: 'button button-light', id: 'ask-button' %>

@@ -10,22 +10,18 @@ class UsersController < ApplicationController
       User.new(
         id: 2,
         name: 'Misha',
-        username: 'aristofun',
+        username: 'aristofun'
       )
     ]
+
+    # @users = User.all
   end
 
-  def new
-  end
+  def new; end
 
-  def edit
-  end
+  def edit; end
 
   def show
-    # @user = User.new(
-    #   name: 'Vadim',
-    #   username: 'instarello'
-    # )
     @user = User.new(
       name: 'Vadim',
       username: 'instarello',
@@ -34,9 +30,16 @@ class UsersController < ApplicationController
 
     @questions = [
       Question.new(text: 'Как дела?', created_at: Date.parse('27.03.2016')),
+      Question.new(text: 'Как дела?', created_at: Date.parse('27.03.2016')),
+      Question.new(text: 'Как дела?', created_at: Date.parse('27.03.2016')),
       Question.new(text: 'В чём смысл жизни?',
                    created_at: Date.parse('28.03.2016'))
     ]
+
+    # количество полученных вопросов
+    @question_to_count = @questions.count
+    # количество заданных вопросов
+    @question_from_count = 1
 
     @new_question = Question.new
   end
