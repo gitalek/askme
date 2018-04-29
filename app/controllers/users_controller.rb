@@ -1,46 +1,59 @@
+# Users controller
 class UsersController < ApplicationController
-  def index
-    @users = [
-      User.new(
-        id: 1,
-        name: 'Vadim',
-        username: 'instarello',
-        avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUz0lGPYv9BTmms-UuRmAKyxRb5w25z62kbpIfr4ZeHh7ptY_7'
-      ),
-      User.new(
-        id: 2,
-        name: 'Misha',
-        username: 'aristofun'
-      )
-    ]
+  before_action :load_user, except: %i[index create new]
+  before_action :authorize_user, except: %i[index new create show]
 
-    # @users = User.all
+  def index
+    @users = User.all
   end
 
-  def new; end
+  def new
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    @user = User.new
+    # render 'new'
+  end
+
+  def create
+    redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
+    @user = User.new(user_params)
+    if @user.save
+      notice = 'Пользователь успешно зарегистрирован!'
+      redirect_to root_url, notice: notice
+    else
+      render 'new'
+    end
+  end
 
   def edit; end
 
+  def update
+    if @user.update(user_params)
+      notice = 'Данные обновлены'
+      redirect_to user_path(@user), notice: notice
+    else
+      render 'edit'
+    end
+  end
+
   def show
-    @user = User.new(
-      name: 'Vadim',
-      username: 'instarello',
-      avatar_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUz0lGPYv9BTmms-UuRmAKyxRb5w25z62kbpIfr4ZeHh7ptY_7'
-    )
+    @questions_to = @user.questions.order(created_at: :desc)
+    @questions_from = 5
 
-    @questions = [
-      Question.new(text: 'Как дела?', created_at: Date.parse('27.03.2016')),
-      Question.new(text: 'Как дела?', created_at: Date.parse('27.03.2016')),
-      Question.new(text: 'Как дела?', created_at: Date.parse('27.03.2016')),
-      Question.new(text: 'В чём смысл жизни?',
-                   created_at: Date.parse('28.03.2016'))
-    ]
+    @new_question = @user.questions.build
+  end
 
-    # количество полученных вопросов
-    @question_to_count = @questions.count
-    # количество заданных вопросов
-    @question_from_count = 1
+  private
 
-    @new_question = Question.new
+  def authorize_user
+    reject_user unless @user == current_user
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :password_confirmation,
+                                 :name, :username, :avatar_url)
+  end
+
+  def load_user
+    @user ||= User.find params[:id]
   end
 end
