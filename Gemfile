@@ -14,6 +14,8 @@ gem 'sass-rails', '~> 5.0'
 
 gem 'jquery-rails'
 
+gem 'rails_12factor'
+
 gem 'uglifier'
 
 group :production do
