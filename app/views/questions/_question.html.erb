@@ -3,7 +3,7 @@
 <%# как в метод ruby объект после ключа (object: @question) %>
 
 <div class="question">
-  <div class="question-content">
+  <div class="question-content clearfix">
     <%# Текст вопроса %>
     <div class="question-text text-lead">
       <%= question.text %>
@@ -19,6 +19,22 @@
     <%# Дата создания вопроса (отформатированная) %>
     <div class="question-date">
       <%= l(question.created_at, format: :short) %>
+    </div>
+
+    <%# Адресант вопроса: зарегистрированный пользователь или аноним %>
+    <div class="question-questioner">
+      <%
+        questioner_id = question.questioner_id
+        if questioner_id.nil? || questioner_id.empty?
+      %>
+          <%= 'anonymous' %>
+      <% else
+          questioner = User.find(questioner_id)
+          name = questioner.name
+          link = user_path(questioner)
+      %>
+        <%= link_to name, link %>
+      <% end %>
     </div>
   </div>
 

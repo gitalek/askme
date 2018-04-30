@@ -29,6 +29,22 @@
 .question-date {
   color: #a0a0a0;
   font-size: 12px;
+  float: left;
+}
+
+.question-questioner,
+.question-questioner a {
+  color: #a0a0a0;
+  font-size: 14px;
+  float: right;
+}
+
+.clearfix:after {
+    content: '.';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
 }
 
 .question-actions {
