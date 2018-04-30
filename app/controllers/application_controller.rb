@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def make_session(user_data)
+    session[:user_id] = user_data[:id]
+  end
+
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
