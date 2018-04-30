@@ -14,7 +14,7 @@ class QuestionsController < ApplicationController
       redirect_to user_path(@question.user),
                   notice: 'Вопрос задан!'
     else
-      render :new
+      render :edit
     end
   end
 
