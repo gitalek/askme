@@ -5,11 +5,11 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def make_session(user_data)
+  def log_in(user_data)
     session[:user_id] = user_data[:id]
   end
 
-  def destroy_session
+  def log_out
     session[:user_id] = nil
   end
 

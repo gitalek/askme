@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     redirect_to root_url, alert: 'Вы уже залогинены' if current_user.present?
     @user = User.new(user_params)
     if @user.save
-      make_session(@user)
+      log_in(@user)
       notice = "#{@user.username}, вы зарегистрированы!"
       redirect_to root_url, notice: notice
     else
