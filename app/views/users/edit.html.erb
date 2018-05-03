@@ -55,6 +55,13 @@
       <div class="form-action buffer-top">
         <%= f.submit 'Сохранить', class: 'button button-dark button-small' %>
       </div>
+
+      <div class="buffer-both text-small">
+        <%= link_to 'Удалить профиль',
+                    user_path(@user),
+                    method: :delete,
+                    data: { confirm: 'Вы уверены, что хотите удалить свой профиль?' } %>
+      </div>
     <% end %>
 
     <%# Подробнее про помощники для создания форм: %>
